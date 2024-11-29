@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://3od6ph2jherh"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_42jb7"]
+[ext_resource type="PackedScene" uid="uid://ccbcqedblomhx" path="res://prefabs/platform.tscn" id="1_kls6y"]
+[ext_resource type="Script" path="res://scripts/cursor_location.gd" id="1_txhw1"]
+[ext_resource type="PackedScene" uid="uid://emc7l5b2fhc8" path="res://prefabs/player.tscn" id="2_otylx"]
+[ext_resource type="Script" path="res://scripts/camera_pivot.gd" id="3_2kp2l"]
+
+[node name="main" type="Node"]
+script = ExtResource("1_42jb7")
+
+[node name="world" type="Node2D" parent="."]
+
+[node name="cursor_location" type="Node2D" parent="world"]
+script = ExtResource("1_txhw1")
+
+[node name="limb_targets" type="Node2D" parent="world"]
+
+[node name="platform" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(119, 205)
+scale = Vector2(4.42195, 4.42195)
+
+[node name="platform2" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(340, 205)
+scale = Vector2(4.42195, 4.42195)
+
+[node name="platform3" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(561, 205)
+scale = Vector2(4.42195, 4.42195)
+
+[node name="player" parent="world" node_paths=PackedStringArray("cursor_location", "limb_targets") instance=ExtResource("2_otylx")]
+position = Vector2(50, 65)
+cursor_location = NodePath("../cursor_location")
+limb_targets = NodePath("../limb_targets")
+
+[node name="camera_pivot" type="Node2D" parent="world" node_paths=PackedStringArray("player")]
+script = ExtResource("3_2kp2l")
+player = NodePath("../player")
+
+[node name="camera" type="Camera2D" parent="world/camera_pivot"]

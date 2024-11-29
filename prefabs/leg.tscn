@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://d35juhqcck27d"]
+
+[ext_resource type="Texture2D" uid="uid://fxyswdrieexq" path="res://sprites/white_circle.png" id="1_kbht7"]
+[ext_resource type="Script" path="res://scripts/leg.gd" id="1_mgrs5"]
+
+[sub_resource type="Curve" id="Curve_4x7ay"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.222772, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_abhh2"]
+
+[node name="leg" type="Node2D"]
+script = ExtResource("1_mgrs5")
+animation_secs = 0.5
+eject_curve = SubResource("Curve_4x7ay")
+max_length = 70.0
+
+[node name="shape_position" type="Node2D" parent="."]
+
+[node name="sprite" type="Sprite2D" parent="shape_position"]
+modulate = Color(1, 0.470588, 0.533333, 1)
+z_index = -1
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_kbht7")
+
+[node name="shape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_abhh2")
