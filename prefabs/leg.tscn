@@ -8,19 +8,22 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.222772, 1), 0.0, 0.0, 0, 0, Ve
 point_count = 3
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_abhh2"]
+radius = 12.0416
 
 [node name="leg" type="Node2D"]
 script = ExtResource("1_mgrs5")
 animation_secs = 0.5
 eject_curve = SubResource("Curve_4x7ay")
 max_length = 70.0
+jump_power_mult = 8.0
+ground_layer = 1
 
 [node name="shape_position" type="Node2D" parent="."]
 
 [node name="sprite" type="Sprite2D" parent="shape_position"]
 modulate = Color(1, 0.470588, 0.533333, 1)
 z_index = -1
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("1_kbht7")
 
 [node name="shape" type="CollisionShape2D" parent="."]

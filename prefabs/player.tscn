@@ -6,12 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://d35juhqcck27d" path="res://prefabs/leg.tscn" id="2_xpgil"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_orgva"]
-bounce = 0.1
+bounce = 0.4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1rkda"]
-radius = 25.02
+radius = 20.025
 
 [node name="player" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_orgva")
 inertia = 20.0
 lock_rotation = true
@@ -19,13 +21,13 @@ angular_damp_mode = 1
 angular_damp = 1.0
 script = ExtResource("1_opcmp")
 torque_mult = 1.0
-max_angular_velocity = 8.0
+max_angular_velocity = 10.0
 limb_target_prefab = ExtResource("2_otv20")
 leg_prefab = ExtResource("2_xpgil")
 
 [node name="sprite" type="Sprite2D" parent="."]
 modulate = Color(1, 0.470588, 0.533333, 1)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.4, 0.4)
 texture = ExtResource("2_was2a")
 
 [node name="collider" type="CollisionShape2D" parent="."]

@@ -39,7 +39,6 @@ func handle_controls(_delta):
 		var new_leg = main.create_node(leg_prefab, self)
 		new_leg.global_position = global_position
 		new_leg.limb_target = new_limb_target
-		print(new_leg)
 	
 
 	

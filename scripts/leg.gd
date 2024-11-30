@@ -5,27 +5,31 @@ extends Node2D
 @export var animation_secs = 1.0
 @export var eject_curve: Curve
 @export var max_length = 30.0
+@export var jump_power_mult = 5.0
+@export_flags_2d_physics var ground_layer
 
 var shape:Node2D
 var shape_position:Node2D
 var limb_target: Node2D
+var player:RigidBody2D
 
 var vector_delta: Vector2
 
 var start_time: float
 var initialized = false
+var weight_history = [0.0,0.0]
 
 func _ready() -> void:
 	shape = get_node('shape')
 	shape_position = get_node('shape_position')
+	player = get_parent()
 
-	shape.reparent(get_parent())
+	shape.reparent(player)
 
 func _physics_process(_delta: float) -> void:		
 	if !initialized:
 		rotation_degrees = -get_parent().rotation_degrees
 		start_time = main.curr_secs()
-		print(limb_target.global_position)
 		vector_delta = limb_target.global_position - global_position
 		if vector_delta.length() > max_length:
 			vector_delta *= max_length / vector_delta.length()
@@ -37,7 +41,16 @@ func _physics_process(_delta: float) -> void:
 		shape.queue_free()
 		queue_free()
 
+	var prev_pos = shape_position.global_position
+
 	shape_position.position = lerp(Vector2.ZERO, vector_delta, eject_curve.sample(weight))
 
-	shape.global_position = shape_position.global_position
+	weight_history.pop_back()
+	weight_history.insert(0, weight)
 
+	if weight_history[0] > weight_history[1]:
+		if len(main.get_nodes_in_shape(shape, shape_position.global_transform, ground_layer)) != 0:
+			var force_to_add = (player.global_position - shape_position.global_position).normalized() * (prev_pos-shape_position.global_position).length() * jump_power_mult
+			player.linear_velocity += force_to_add
+
+	shape.global_position = shape_position.global_position

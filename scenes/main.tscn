@@ -8,6 +8,7 @@
 
 [node name="main" type="Node"]
 script = ExtResource("1_42jb7")
+basic_layer = 3
 
 [node name="world" type="Node2D" parent="."]
 
@@ -28,13 +29,33 @@ scale = Vector2(4.42195, 4.42195)
 position = Vector2(561, 205)
 scale = Vector2(4.42195, 4.42195)
 
+[node name="platform4" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(779, 205)
+scale = Vector2(4.42195, 4.42195)
+
+[node name="platform5" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(779, 90)
+scale = Vector2(4.42195, 4.42195)
+
+[node name="platform6" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(1000, 90)
+scale = Vector2(4.42195, 4.42195)
+
+[node name="platform7" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(1221, 90)
+scale = Vector2(4.42195, 4.42195)
+
+[node name="platform8" parent="world" instance=ExtResource("1_kls6y")]
+position = Vector2(1442, 90)
+scale = Vector2(4.42195, 4.42195)
+
 [node name="player" parent="world" node_paths=PackedStringArray("cursor_location", "limb_targets") instance=ExtResource("2_otylx")]
 position = Vector2(50, 65)
 cursor_location = NodePath("../cursor_location")
 limb_targets = NodePath("../limb_targets")
 
-[node name="camera_pivot" type="Node2D" parent="world" node_paths=PackedStringArray("player")]
+[node name="camera_pivot" type="Node2D" parent="world" node_paths=PackedStringArray("targets")]
 script = ExtResource("3_2kp2l")
-player = NodePath("../player")
+targets = [NodePath("../player"), NodePath("../cursor_location"), NodePath("../player")]
 
 [node name="camera" type="Camera2D" parent="world/camera_pivot"]
