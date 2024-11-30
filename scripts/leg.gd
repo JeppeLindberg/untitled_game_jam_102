@@ -17,7 +17,7 @@ var vector_delta: Vector2
 
 var start_time: float
 var initialized = false
-var weight_history = [0.0,0.0]
+var sample_history = [0.0,0.0]
 
 func _ready() -> void:
 	shape = get_node('shape')
@@ -43,12 +43,13 @@ func _physics_process(_delta: float) -> void:
 
 	var prev_pos = shape_position.global_position
 
-	shape_position.position = lerp(Vector2.ZERO, vector_delta, eject_curve.sample(weight))
+	var sample = eject_curve.sample(weight)
+	shape_position.position = lerp(Vector2.ZERO, vector_delta, sample)
 
-	weight_history.pop_back()
-	weight_history.insert(0, weight)
+	sample_history.pop_back()
+	sample_history.insert(0, sample)
 
-	if weight_history[0] > weight_history[1]:
+	if sample_history[0] > sample_history[1]:
 		if len(main.get_nodes_in_shape(shape, shape_position.global_transform, ground_layer)) != 0:
 			var force_to_add = (player.global_position - shape_position.global_position).normalized() * (prev_pos-shape_position.global_position).length() * jump_power_mult
 			player.linear_velocity += force_to_add
